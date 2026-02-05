@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Cursos Tech Gratuitos – 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:#ff4fa3;
+  font-family:Inter,sans-serif;
+  color:#111;
+}
+
+header{
+  background:#fff;
+  border-bottom:6px solid #000;
+  text-align:center;
+  padding:2rem 1rem;
+}
+
+header h1{
+  font-family:"Press Start 2P",cursive;
+  font-size:clamp(1rem,4vw,1.5rem);
+  margin-bottom:1rem;
+}
+
+.controls{
+  max-width:1200px;
+  margin:1.5rem auto;
+  background:#fff;
+  border:6px solid #000;
+  padding:1rem;
+  display:grid;
+  gap:1rem;
+}
+
+.controls input,.controls select,.controls button{
+  padding:.7rem;
+  border:3px solid #000;
+  font-size:.9rem;
+}
+
+.controls button{
+  background:#ff2d8f;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+@media(min-width:768px){
+  .controls{grid-template-columns:2fr 1fr 1fr}
+}
+
+.tags-filter{
+  max-width:1200px;
+  margin:0 auto 1rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  justify-content:center;
+}
+
+.tag{
+  border:3px solid #000;
+  padding:.4rem .7rem;
+  background:#fff;
+  font-size:.75rem;
+  cursor:pointer;
+}
+
+.tag.active{
+  background:#000;
+  color:#fff;
+}
+
+.container{
+  max-width:1200px;
+  margin:0 auto 3rem;
+  background:#fff;
+  border:6px solid #000;
+  padding:1.5rem;
+}
+
+section{margin-bottom:2.5rem}
+
+section h2{
+  font-family:"Press Start 2P",cursive;
+  font-size:.8rem;
+  margin-bottom:1rem;
+}
+
+.course{
+  border:3px solid #000;
+  padding:1rem;
+  margin-bottom:1rem;
+  position:relative;
+}
+
+.course a{
+  color:#ff2d8f;
+  font-weight:600;
+  text-decoration:none;
+}
+
+.meta{
+  font-size:.75rem;
+  margin-top:.4rem;
+}
+
+.multi-links{
+  margin-top:0.5rem;
+  font-size:0.75rem;
+}
+
+.multi-links .link-item{
+  display:flex;
+  align-items:center;
+  margin-bottom:0.3rem;
+}
+
+.multi-links .link-item::before{
+  content:"•";
+  margin-right:0.5rem;
+  color:#ff2d8f;
+}
+
+.favorite{
+  position:absolute;
+  top:8px;
+  right:10px;
+  cursor:pointer;
+  font-size:1.2rem;
+  animation:pulse 1.5s infinite;
+}
+
+.favorite.active{color:gold}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+  100%{transform:scale(1)}
+}
+
+footer{
+  text-align:center;
+  color:#fff;
+  font-size:.8rem;
+  padding-bottom:2rem;
+}
+
+.github-btn{
+  display:inline-block;
+  background:#000;
+  color:#fff;
+  text-decoration:none;
+  padding:0.5rem 1rem;
+  margin-top:1rem;
+  border-radius:4px;
+  font-weight:600;
+  transition:background 0.3s;
+}
+
+.github-btn:hover{
+  background:#333;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:1rem;
+}
+
+.modal-content{
+  background:#fff;
+  border:6px solid #000;
+  padding:1.5rem;
+  width:100%;
+  max-width:420px;
+}
+
+.modal-content h3{
+  font-family:"Press Start 2P",cursive;
+  font-size:.8rem;
+  margin-bottom:1rem;
+}
+
+.modal-content input,
+.modal-content textarea{
+  width:100%;
+  padding:.6rem;
+  border:3px solid #000;
+  margin-bottom:.7rem;
+}
+
+.modal-content button{
+  width:100%;
+  padding:.6rem;
+  border:3px solid #000;
+  background:#ff2d8f;
+  color:#fff;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>CURSOS TECH GRATUITOS</h1>
+<p>Lista organizada • Atualizado 2026</p>
+</header>
+
+<div class="controls">
+<input id="search" placeholder="🔍 Buscar curso, plataforma ou tema">
+<select id="certFilter">
+  <option value="all">🎓 Todos</option>
+  <option value="free">Certificado gratuito</option>
+  <option value="paid">Certificado pago/opcional</option>
+</select>
+<button onclick="openModal()">➕ Sugerir curso</button>
+</div>
+
+<div class="tags-filter">
+<div class="tag active" data-area="all">Todos</div>
+<div class="tag" data-area="basico">Básico</div>
+<div class="tag" data-area="web">Web</div>
+<div class="tag" data-area="backend">Back-end</div>
+<div class="tag" data-area="dados">Dados</div>
+<div class="tag" data-area="cloud">Cloud</div>
+<div class="tag" data-area="ux">UX / Design</div>
+<div class="tag" data-area="ia">IA</div>
+<div class="tag" data-area="games">Games</div>
+<div class="tag" data-area="seguranca">Segurança</div>
+</div>
+
+<div class="container">
+
+<section>
+<h2>📘 Curso em Vídeo – Gustavo Guanabara</h2>
+
+<div class="course" data-area="basico" data-cert="paid">
+<span class="favorite">⭐</span>
+<div>Inglês para Iniciantes</div>
+<div class="multi-links">
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/curso-de-ingles-para-iniciantes-modulo-1-beginners-gratis-e-completo/" target="_blank">Módulo 1</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/curso-de-ingles-para-iniciantes-modulo-02-beginners-completo/" target="_blank">Módulo 2</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/curso-de-ingles-para-iniciantes-modulo-03-beginners-completo/" target="_blank">Módulo 3</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/curso-de-ingles-para-iniciantes-modulo-04-beginners-completo-20-horas/" target="_blank">Módulo 4</a></div>
+</div>
+<div class="meta">Básico • Certificado pago</div>
+</div>
+
+<div class="course" data-area="basico" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.cursoemvideo.com/curso/curso-de-algoritmo/" target="_blank">
+Algoritmo
+</a>
+<div class="meta">Lógica • Certificado pago</div>
+</div>
+
+<div class="course" data-area="web" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.cursoemvideo.com/curso/html5/" target="_blank">
+HTML5
+</a>
+<div class="meta">Web • Certificado pago</div>
+</div>
+
+<div class="course" data-area="backend" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.cursoemvideo.com/curso/mysql/" target="_blank">
+MySQL
+</a>
+<div class="meta">Banco de Dados • Certificado pago</div>
+</div>
+
+<div class="course" data-area="backend" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.cursoemvideo.com/curso/php-poo/" target="_blank">
+PHP POO
+</a>
+<div class="meta">Back-end • Certificado pago</div>
+</div>
+
+<div class="course" data-area="web" data-cert="paid">
+<span class="favorite">⭐</span>
+<div>HTML5 e CSS3</div>
+<div class="multi-links">
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/html5-css3-modulo1/" target="_blank">Módulo 1</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/curso-html5-e-css3-modulo-2-de-5-40-horas/" target="_blank">Módulo 2</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/curso-html5-e-css3-modulo-3-de-5-40-horas/" target="_blank">Módulo 3</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/curso-html5-e-css3-modulo-4-de-5-40-horas/" target="_blank">Módulo 4</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/curso-html5-e-css3-modulo-5-de-5-40-horas/" target="_blank">Módulo 5</a></div>
+</div>
+<div class="meta">Front-end • Certificado pago</div>
+</div>
+
+<div class="course" data-area="backend" data-cert="paid">
+<span class="favorite">⭐</span>
+<div>Python 3</div>
+<div class="multi-links">
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/python-3-mundo-1/" target="_blank">Mundo 1</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/python-3-mundo-2/" target="_blank">Mundo 2</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/python-3-mundo-3/" target="_blank">Mundo 3</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/python-3-mundo-4-40-horas/" target="_blank">Mundo 4</a></div>
+</div>
+<div class="meta">Programação • Certificado pago</div>
+</div>
+
+<div class="course" data-area="web" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.cursoemvideo.com/curso/javascript/" target="_blank">
+JavaScript
+</a>
+<div class="meta">Web • Certificado pago</div>
+</div>
+
+<div class="course" data-area="basico" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.cursoemvideo.com/curso/curso-de-git-e-github/" target="_blank">
+Git e GitHub
+</a>
+<div class="meta">Versionamento • Certificado pago</div>
+</div>
+
+<div class="course" data-area="seguranca" data-cert="paid">
+<span class="favorite">⭐</span>
+<div>Segurança da Informação</div>
+<div class="multi-links">
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/seguranca-da-informacao-modulo-00/" target="_blank">Módulo 00</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/seguranca-da-informacao-modulo-01-20-horas/" target="_blank">Módulo 01</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/seguranca-da-informacao-modulo-02-20-horas/" target="_blank">Módulo 02</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/seguranca-da-informacao-modulo-03-0-horas/" target="_blank">Módulo 03</a></div>
+  <div class="link-item"><a href="https://www.cursoemvideo.com/curso/seguranca-da-informacao-modulo-04-20-horas/" target="_blank">Módulo 04</a></div>
+</div>
+<div class="meta">Segurança • Certificado pago</div>
+</div>
+
+<div class="course" data-area="seguranca" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.cursoemvideo.com/curso/linux/" target="_blank">
+Linux
+</a>
+<div class="meta">Sistemas • Certificado pago</div>
+</div>
+
+<div class="course" data-area="basico" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.cursoemvideo.com/curso/raspberry-pi-basico/" target="_blank">
+Raspberry Pi Básico
+</a>
+<div class="meta">Hardware • Certificado pago</div>
+</div>
+</section>
+
+<section>
+<h2>🌐 freeCodeCamp – Certificações</h2>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.freecodecamp.org/portuguese/learn/responsive-web-design-v9/" target="_blank">
+Design Responsivo para Web
+</a>
+<div class="meta">Front-end • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.freecodecamp.org/portuguese/learn/javascript-v9/" target="_blank">
+JavaScript
+</a>
+<div class="meta">Programação • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.freecodecamp.org/portuguese/learn/front-end-development-libraries-v9/" target="_blank">
+Bibliotecas Front-End
+</a>
+<div class="meta">React • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="backend" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.freecodecamp.org/portuguese/learn/python-v9/" target="_blank">
+Python
+</a>
+<div class="meta">Programação • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="dados" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.freecodecamp.org/portuguese/learn/relational-databases-v9/" target="_blank">
+Bancos de Dados Relacionais
+</a>
+<div class="meta">Dados • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="backend" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.freecodecamp.org/portuguese/learn/back-end-development-and-apis-v9/" target="_blank">
+Desenvolvimento Back-End e APIs
+</a>
+<div class="meta">Back-end • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.freecodecamp.org/portuguese/learn/full-stack-developer-v9/" target="_blank">
+Desenvolvedor Full Stack
+</a>
+<div class="meta">Completo • Certificado gratuito</div>
+</div>
+</section>
+
+<section>
+<h2>🚀 Rocketseat</h2>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.rocketseat.com.br/discover" target="_blank">
+Discover – HTML, CSS, JS, React, Node.js
+</a>
+<div class="meta">Web • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="backend" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://app.rocketseat.com.br/jornada/python-com-flask-curso-introdutorio/visao-geral" target="_blank">
+Python com Flask – Curso Introdutório
+</a>
+<div class="meta">Back-end • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://app.rocketseat.com.br/jornada/angular-curso-introdutorio/visao-geral" target="_blank">
+Angular – Curso Introdutório
+</a>
+<div class="meta">Front-end • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="backend" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://app.rocketseat.com.br/jornada/c-sharp-dot-net-curso-introdutorio/visao-geral" target="_blank">
+C# e .NET – Curso Introdutório
+</a>
+<div class="meta">Back-end • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://app.rocketseat.com.br/catalogo/contexto/disponibilidade/is_free" target="_blank">
+Todos cursos gratuitos Rocketseat
+</a>
+<div class="meta">Diversos • Certificado gratuito</div>
+</div>
+</section>
+
+<section>
+<h2>🏢 Plataformas Corporativas</h2>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://skillsbuild.org/pt-br/students/course-catalog/web-development" target="_blank">
+IBM SkillsBuild – Fundamentos Web
+</a>
+<div class="meta">Web • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="ux" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.coursera.org/professional-certificates/google-ux-design" target="_blank">
+Google UX Design (auditar)
+</a>
+<div class="meta">UX • Auditar grátis</div>
+</div>
+
+<div class="course" data-area="dados" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.coursera.org/professional-certificates/google-data-analytics" target="_blank">
+Google Data Analytics (auditar)
+</a>
+<div class="meta">Dados • Auditar grátis</div>
+</div>
+
+<div class="course" data-area="dados" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.datascienceacademy.com.br/cursosgratuitos" target="_blank">
+Data Science Academy – Análise de Dados
+</a>
+<div class="meta">Dados • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="dados" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://youtube.com/playlist?list=PLxjKFMYkZ9OdkcIZVh3vCFfV99o1CHVaX" target="_blank">
+Hashtag Treinamentos – Power BI (YouTube)
+</a>
+<div class="meta">Dados • Gratuito</div>
+</div>
+
+<div class="course" data-area="cloud" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://aws.amazon.com/training/digital/" target="_blank">
+AWS Training – Cursos Digitais
+</a>
+<div class="meta">Cloud • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="cloud" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://learn.microsoft.com/pt-br/training/azure/" target="_blank">
+Microsoft Learn – Azure + DevOps
+</a>
+<div class="meta">Cloud • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.dio.me/bootcamp" target="_blank">
+Bootcamps DIO (2 cursos simultâneos)
+</a>
+<div class="meta">Diversos • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="web" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://learn.microsoft.com/pt-br/" target="_blank">
+Microsoft Learn – Diversos cursos
+</a>
+<div class="meta">Tecnologia • Certificado gratuito</div>
+</div>
+</section>
+
+<section>
+<h2>🎨 Design & UX</h2>
+
+<div class="course" data-area="ux" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://youtube.com/playlist?list=PL2b2uvKR5s-Hx3byi3qZY_HhPPw9U0e6x" target="_blank">
+Figma – Doug Lazarini (YouTube)
+</a>
+<div class="meta">Design • Gratuito</div>
+</div>
+
+<div class="course" data-area="ux" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.figma.com/pt-br/comunidade/file/1251189054589398123/bootcampinho-curso-gratuito-de-ui-ux-design" target="_blank">
+Bootcampinho UI/UX – Figma
+</a>
+<div class="meta">UI/UX • Gratuito</div>
+</div>
+</section>
+
+<section>
+<h2>🎮 Games & Desenvolvimento</h2>
+
+<div class="course" data-area="games" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://learn.unity.com/" target="_blank">
+Unity Learn – Cursos Oficiais
+</a>
+<div class="meta">Games • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="games" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.codecademy.com/catalog/subject/game-development" target="_blank">
+Codecademy – Game Development
+</a>
+<div class="meta">Games • Certificado gratuito</div>
+</div>
+</section>
+
+<section>
+<h2>🔒 Segurança & IA</h2>
+
+<div class="course" data-area="seguranca" data-cert="free">
+<span class="favorite">⭐</span>
+<a href="https://www.fortinet.com/br/training/cybersecurity-professionals" target="_blank">
+Fortinet Training – Segurança
+</a>
+<div class="meta">Cybersecurity • Certificado gratuito</div>
+</div>
+
+<div class="course" data-area="ia" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.coursera.org/learn/machine-learning" target="_blank">
+Machine Learning – Regressão e Classificação
+</a>
+<div class="meta">IA • Certificado pago</div>
+</div>
+
+<div class="course" data-area="ia" data-cert="paid">
+<span class="favorite">⭐</span>
+<a href="https://www.coursera.org/specializations/deep-learning" target="_blank">
+Especialização em Deep Learning
+</a>
+<div class="meta">IA • Certificado pago</div>
+</div>
+</section>
+
+</div>
+
+<footer>
+<p>Feito por @samsocodes</p>
+<a href="https://github.com/samsocodes" target="_blank" class="github-btn">
+🐙 Ver GitHub
+</a>
+</footer>
+
+<div class="modal" id="modal">
+<div class="modal-content">
+<h3>Sugerir curso</h3>
+<p>Para sugerir um novo curso, por favor preencha o formulário:</p>
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSc_xl3fmSjK3ODzEno1vJ4ulPBS2bZkmIco-5G84AMFwBl7Vg/viewform?usp=publish-editor" 
+   target="_blank" 
+   style="display:block; width:100%; padding:.6rem; border:3px solid #000; background:#ff2d8f; color:#fff; text-decoration:none; text-align:center; margin-bottom:.7rem;">
+   📝 Abrir Formulário
+</a>
+<button onclick="closeModal()">Fechar</button>
+</div>
+</div>
+
+<script>
+const search=document.getElementById("search");
+const certFilter=document.getElementById("certFilter");
+const tags=document.querySelectorAll(".tag");
+const courses=document.querySelectorAll(".course");
+let activeArea="all";
+
+function filter(){
+  const text=search.value.toLowerCase();
+  const cert=certFilter.value;
+
+  courses.forEach(c=>{
+    const matchText=c.innerText.toLowerCase().includes(text);
+    const matchCert=cert==="all"||c.dataset.cert===cert;
+    const matchArea=activeArea==="all"||c.dataset.area===activeArea;
+    c.style.display=matchText&&matchCert&&matchArea?"block":"none";
+  });
+}
+
+search.oninput=filter;
+certFilter.onchange=filter;
+
+tags.forEach(tag=>{
+  tag.onclick=()=>{
+    tags.forEach(t=>t.classList.remove("active"));
+    tag.classList.add("active");
+    activeArea=tag.dataset.area;
+    filter();
+  }
+});
+
+/* FAVORITOS */
+const saved=JSON.parse(localStorage.getItem("fav"))||[];
+document.querySelectorAll(".favorite").forEach((s,i)=>{
+  if(saved.includes(i))s.classList.add("active");
+  s.onclick=()=>{
+    s.classList.toggle("active");
+    saved.includes(i)?saved.splice(saved.indexOf(i),1):saved.push(i);
+    localStorage.setItem("fav",JSON.stringify(saved));
+  };
+});
+
+function openModal(){document.getElementById("modal").style.display="flex"}
+function closeModal(){document.getElementById("modal").style.display="none"}
+</script>
+
+</body>
+                                                      </html>
